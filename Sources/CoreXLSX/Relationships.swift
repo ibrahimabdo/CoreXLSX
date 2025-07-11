@@ -134,6 +134,10 @@ public struct Relationship: Codable, Equatable {
       """
       http://schemas.microsoft.com/office/2020/02/relationships/classificationlabels
       """
+    case sheetMetadata =
+      """
+      http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata
+      """
   }
 
   /// The identifier for this entity.
