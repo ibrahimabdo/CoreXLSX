@@ -31,105 +31,266 @@ public struct Relationships: Codable, Equatable {
  wouldn't need to handle relationships directly.
  */
 public struct Relationship: Codable, Equatable {
-  public enum SchemaType: String, Codable {
-    case calcChain =
-      """
-      http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
-      calcChain
-      """
-    case officeDocument =
-      """
-      http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
-      officeDocument
-      """
-    case extendedProperties =
-      """
-      http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
-      extended-properties
-      """
-    case packageCoreProperties =
-      """
-      http://schemas.openxmlformats.org/package/2006/relationships/metadata/\
-      core-properties
-      """
-    case coreProperties =
-      """
-      http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
-      metadata/core-properties
-      """
-    case connections =
-      """
-      http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
-      connections
-      """
-    case worksheet =
-      """
-      http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
-      worksheet
-      """
-    case chartsheet =
-      """
-      http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
-      chartsheet
-      """
-    case sharedStrings =
-      """
-      http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
-      sharedStrings
-      """
-    case styles =
-      """
-      http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
-      styles
-      """
-    case theme =
-      """
-      http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
-      theme
-      """
-    case pivotCache =
-      """
-      http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
-      pivotCacheDefinition
-      """
-    case metadataThumbnail =
-      """
-      http://schemas.openxmlformats.org/package/2006/relationships/metadata/\
-      thumbnail
-      """
-    case customProperties =
-      """
-      http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
-      custom-properties
-      """
-    case externalLink =
-      """
-      http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
-      externalLink
-      """
-    case customXml =
-      """
-      http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
-      customXml
-      """
-    case person =
-      """
-      http://schemas.microsoft.com/office/2017/10/relationships/\
-      person
-      """
-    case webExtensionTaskPanes =
-      """
-      http://schemas.microsoft.com/office/2011/relationships/\
-      webextensiontaskpanes
-      """
-    case googleWorkbookMetadata =
-      """
-      http://customschemas.google.com/relationships/workbookmetadata
-      """
-    case purlOCLC =
-      """
-      http://purl.oclc.org/ooxml/officeDocument/relationships/extendedProperties
-      """
+  public enum SchemaType: Codable, Equatable {
+    case calcChain
+    case officeDocument
+    case extendedProperties
+    case packageCoreProperties
+    case coreProperties
+    case connections
+    case worksheet
+    case chartsheet
+    case sharedStrings
+    case styles
+    case theme
+    case pivotCache
+    case metadataThumbnail
+    case customProperties
+    case externalLink
+    case customXml
+    case person
+    case webExtensionTaskPanes
+    case googleWorkbookMetadata
+    case purlOCLC
+    case sheetMetadata
+    case classificationlabels
+    case unknown(String)
+    
+    private var rawValue: String {
+      switch self {
+      case .calcChain:
+        return """
+        http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+        calcChain
+        """
+      case .officeDocument:
+        return """
+        http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+        officeDocument
+        """
+      case .extendedProperties:
+        return """
+        http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+        extended-properties
+        """
+      case .packageCoreProperties:
+        return """
+        http://schemas.openxmlformats.org/package/2006/relationships/metadata/\
+        core-properties
+        """
+      case .coreProperties:
+        return """
+        http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+        metadata/core-properties
+        """
+      case .connections:
+        return """
+        http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+        connections
+        """
+      case .worksheet:
+        return """
+        http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+        worksheet
+        """
+      case .chartsheet:
+        return """
+        http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+        chartsheet
+        """
+      case .sharedStrings:
+        return """
+        http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+        sharedStrings
+        """
+      case .styles:
+        return """
+        http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+        styles
+        """
+      case .theme:
+        return """
+        http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+        theme
+        """
+      case .pivotCache:
+        return """
+        http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+        pivotCacheDefinition
+        """
+      case .metadataThumbnail:
+        return """
+        http://schemas.openxmlformats.org/package/2006/relationships/metadata/\
+        thumbnail
+        """
+      case .customProperties:
+        return """
+        http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+        custom-properties
+        """
+      case .externalLink:
+        return """
+        http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+        externalLink
+        """
+      case .customXml:
+        return """
+        http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+        customXml
+        """
+      case .person:
+        return """
+        http://schemas.microsoft.com/office/2017/10/relationships/\
+        person
+        """
+      case .webExtensionTaskPanes:
+        return """
+        http://schemas.microsoft.com/office/2011/relationships/\
+        webextensiontaskpanes
+        """
+      case .googleWorkbookMetadata:
+        return """
+        http://customschemas.google.com/relationships/workbookmetadata
+        """
+      case .purlOCLC:
+        return """
+        http://purl.oclc.org/ooxml/officeDocument/relationships/extendedProperties
+        """
+      case .sheetMetadata:
+        return """
+        http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata
+        """
+      case .classificationlabels:
+        return """
+        http://schemas.microsoft.com/office/2020/02/relationships/classificationlabels
+        """
+      case .unknown(let value):
+        return value
+      }
+    }
+    
+    public init(from decoder: Decoder) throws {
+      let container = try decoder.singleValueContainer()
+      let stringValue = try container.decode(String.self)
+      
+      // Try to match known schema types
+      switch stringValue {
+      case """
+           http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+           calcChain
+           """:
+        self = .calcChain
+      case """
+           http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+           officeDocument
+           """:
+        self = .officeDocument
+      case """
+           http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+           extended-properties
+           """:
+        self = .extendedProperties
+      case """
+           http://schemas.openxmlformats.org/package/2006/relationships/metadata/\
+           core-properties
+           """:
+        self = .packageCoreProperties
+      case """
+           http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+           metadata/core-properties
+           """:
+        self = .coreProperties
+      case """
+           http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+           connections
+           """:
+        self = .connections
+      case """
+           http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+           worksheet
+           """:
+        self = .worksheet
+      case """
+           http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+           chartsheet
+           """:
+        self = .chartsheet
+      case """
+           http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+           sharedStrings
+           """:
+        self = .sharedStrings
+      case """
+           http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+           styles
+           """:
+        self = .styles
+      case """
+           http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+           theme
+           """:
+        self = .theme
+      case """
+           http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+           pivotCacheDefinition
+           """:
+        self = .pivotCache
+      case """
+           http://schemas.openxmlformats.org/package/2006/relationships/metadata/\
+           thumbnail
+           """:
+        self = .metadataThumbnail
+      case """
+           http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+           custom-properties
+           """:
+        self = .customProperties
+      case """
+           http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+           externalLink
+           """:
+        self = .externalLink
+      case """
+           http://schemas.openxmlformats.org/officeDocument/2006/relationships/\
+           customXml
+           """:
+        self = .customXml
+      case """
+           http://schemas.microsoft.com/office/2017/10/relationships/\
+           person
+           """:
+        self = .person
+      case """
+           http://schemas.microsoft.com/office/2011/relationships/\
+           webextensiontaskpanes
+           """:
+        self = .webExtensionTaskPanes
+      case """
+           http://customschemas.google.com/relationships/workbookmetadata
+           """:
+        self = .googleWorkbookMetadata
+      case """
+           http://purl.oclc.org/ooxml/officeDocument/relationships/extendedProperties
+           """:
+        self = .purlOCLC
+      case """
+           http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata
+           """:
+        self = .sheetMetadata
+      case """
+           http://schemas.microsoft.com/office/2020/02/relationships/classificationlabels
+           """:
+        self = .classificationlabels
+      default:
+        // For any unknown schema type, store it as unknown
+        self = .unknown(stringValue)
+      }
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+      var container = encoder.singleValueContainer()
+      try container.encode(rawValue)
+    }
   }
 
   /// The identifier for this entity.
